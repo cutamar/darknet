@@ -1,0 +1,45 @@
+<html>
+    <head>
+        <title>Cam Control</title>
+        <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        <script type="text/javascript" charset="utf-8">
+            var socket = io.connect('http://' + document.domain + ':' + location.port);
+            socket.on('echo', function(data){
+                $('#response').html('<p>'+data.echo+'</p>');
+            });
+
+	    socket.emit('switch', {message : ''});
+            
+            function on(){
+                socket.emit('switch', {message : 'on'});
+            }
+
+            function off(){
+                socket.emit('switch', {message : 'off'});
+            }
+        </script>
+        <style>
+            div{
+                position: relative;
+                margin-left: auto;
+                margin-right: auto;
+                width: 400px;
+            }
+            textarea{
+                width: 100%;
+                height: 100px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="input">
+            <form>
+                <button type="button" onclick="on(); return false;">On</button>
+		<button type="button" onclick="off(); return false;">Off</button>
+            </form>
+        </div>
+        <div id="response">
+        </div>
+    </body>
+</html>
