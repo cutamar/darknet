@@ -454,6 +454,7 @@ void test_detector(char *datacfg, char *cfgfile, char *weightfile, char *filenam
     char *input = buff;
     int j;
     float nms=.4;
+    FILE *lock_file;
     while(1){
         if(filename){
             strncpy(input, filename, 256);
@@ -464,6 +465,10 @@ void test_detector(char *datacfg, char *cfgfile, char *weightfile, char *filenam
             if(!input) return;
             strtok(input, "\n");
         }
+
+        lock_file = fopen("lock", "w+");
+        fclose(lock_file)
+
         image im = load_image_color(input,0,0);
         image sized = resize_image(im, net.w, net.h);
         layer l = net.layers[net.n-1];
@@ -478,9 +483,14 @@ void test_detector(char *datacfg, char *cfgfile, char *weightfile, char *filenam
         printf("%s: Predicted in %f seconds.\n", input, sec(clock()-time));
         get_region_boxes(l, 1, 1, thresh, probs, boxes, 0, 0);
         if (nms) do_nms_sort(boxes, probs, l.w*l.h*l.n, l.classes, nms);
-        draw_detections(im, l.w*l.h*l.n, thresh, boxes, probs, names, alphabet, l.classes);
-        save_image(im, "predictions");
-        show_image(im, "predictions");
+        int person = draw_detections(im, l.w*l.h*l.n, thresh, boxes, probs, names, alphabet, l.classes);
+
+        if(person == 1){
+            save_image(im, "predictions");
+        }
+        else{
+            remove(input);
+        }
 
         free_image(im);
         free_image(sized);
@@ -491,6 +501,7 @@ void test_detector(char *datacfg, char *cfgfile, char *weightfile, char *filenam
         cvDestroyAllWindows();
 #endif
         if (filename) break;
+        remove("lock");
     }
 }
 
