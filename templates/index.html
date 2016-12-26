@@ -6,7 +6,7 @@
         <script type="text/javascript" charset="utf-8">
             var socket = io.connect('http://' + document.domain + ':' + location.port);
             socket.on('echo', function(data){
-                $('#response').html('<p>'+data.echo+'</p>');
+                $('#response').html('<p>Running: '+data.echo+'</p>');
             });
 
 	    socket.emit('switch', {message : ''});
@@ -36,7 +36,7 @@
         <div class="input">
             <form>
                 <button type="button" onclick="on(); return false;">On</button>
-		<button type="button" onclick="off(); return false;">Off</button>
+		        <button type="button" onclick="off(); return false;">Off</button>
             </form>
         </div>
         <div id="response">
