@@ -467,7 +467,7 @@ void test_detector(char *datacfg, char *cfgfile, char *weightfile, char *filenam
         }
 
         lock_file = fopen("lock", "w+");
-        fclose(lock_file)
+        fclose(lock_file);
 
         image im = load_image_color(input,0,0);
         image sized = resize_image(im, net.w, net.h);
