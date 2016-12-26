@@ -1,8 +1,11 @@
-![Darknet Logo](http://pjreddie.com/media/files/darknet-black-small.png)
+#Darknet Person Detection
 
-#Darknet#
-Darknet is an open source neural network framework written in C and CUDA. It is fast, easy to install, and supports CPU and GPU computation.
+I limited darknet only to person detection for use with my raspberry security night cams.
 
-For more information see the [Darknet project website](http://pjreddie.com/darknet).
+The server.py is a flask server checking the cams for new images. If it recognizes a person, it calls you using twilio and sends mails with relevant pictures.
 
-For questions or issues please use the [Google Group](https://groups.google.com/forum/#!forum/darknet).
+It's just a temporary solution and not very useful expect for me, because many things are hardcoded. In the near future, I am going to write a new solution using TensorFlow for the recognition part.
+
+###Note
+
+Link to weights file http://pjreddie.com/media/files/yolo.weights

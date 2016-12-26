@@ -486,7 +486,7 @@ void test_detector(char *datacfg, char *cfgfile, char *weightfile, char *filenam
         int person = draw_detections(im, l.w*l.h*l.n, thresh, boxes, probs, names, alphabet, l.classes);
 
         if(person == 1){
-            save_image(im, "predictions");
+            save_image(im, input);
         }
         else{
             remove(input);
